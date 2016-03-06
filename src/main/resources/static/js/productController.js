@@ -1,0 +1,84 @@
+'use strict';
+
+App.controller('ProductController', ['$scope', 'ProductService', function ($scope, ProductService) {
+    var self = this;
+    self.product = {id: null, name: '', price: '', description: '', unitsInStock: '0', imageURL: ''};
+    self.products = [];
+
+    self.fetchAllProducts = function () {
+        ProductService.fetchAllProducts()
+            .then(
+                function (d) {
+                    self.products = d;
+                },
+                function (errResponse) {
+                    console.error('Error while fetching Currencies');
+                }
+            );
+    };
+
+    self.createProduct = function (product) {
+        ProductService.createProduct(product)
+            .then(
+                self.fetchAllProducts,
+                function (errResponse) {
+                    console.error('Error while creating User.');
+                }
+            );
+    };
+
+    self.updateProduct = function (product, id) {
+        ProductService.updateProduct(product, id)
+            .then(
+                self.fetchAllProducts,
+                function (errResponse) {
+                    console.error('Error while updating User.');
+                }
+            );
+    };
+
+    self.deleteProduct = function (id) {
+        ProductService.deleteProduct(id)
+            .then(
+                self.fetchAllProducts,
+                function (errResponse) {
+                    console.error('Error while deleting User.');
+                }
+            );
+    };
+
+    self.fetchAllProducts();
+
+    self.submit = function () {
+        if (self.product.id === null) {
+            console.log('Saving New Product', self.product);
+            self.createProduct(self.product);
+        }
+        self.reset();
+    };
+
+    self.edit = function (id) {
+        console.log('id to be edited', id);
+        for (var i = 0; i < self.products.length; i++) {
+            if (self.products[i].id === id) {
+                self.product = angular.copy(self.products[i]);
+                break;
+            }
+        }
+    };
+
+    self.remove = function (id) {
+        console.log('id to be deleted', id);
+        if (self.product.id === id) {//clean form if the user to be deleted is shown there.
+            self.reset();
+        }
+        self.deleteProduct(id);
+    };
+
+
+    self.reset = function () {
+        self.product = {id: null, name: '', price: '', description: '', unitsInStock: '0', imageURL: ''};
+        $scope.myForm.$setPristine(); //reset Form
+    };
+
+}]);

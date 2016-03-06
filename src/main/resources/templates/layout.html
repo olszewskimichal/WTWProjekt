@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <title layout:title-pattern="$CONTENT_TITLE"></title>
+    <link th:replace="/fragments/style"/>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<div th:replace="/fragments/header"/>
+<div class="container">
+    <div layout:fragment="content"></div>
+    <div th:replace="/fragments/footer"></div>
+    <div th:replace="/fragments/js"></div>
+</div>
+</body>
+</html>

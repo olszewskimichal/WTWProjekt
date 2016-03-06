@@ -1,0 +1,84 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Rejestracja</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="jumbotron">
+        <h1 th:text="#{register}"></h1>
+        <p>
+            Zarejestruj nowe konto
+        </p>
+    </div>
+    <section class="container">
+        <form action="#" th:action="@{/register}" th:object="${userCreateForm}" method="post"
+              class="form-horizontal"
+              enctype="multipart/form-data">
+            <fieldset>
+                <legend>Dodaj nowego użytkownika</legend>
+                <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger">
+                    <p th:each="err:${#fields.allErrors()}" th:text="${err}">...</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2" for="email" th:text="#{register.email}"/>
+                    <div class="col-lg-10">
+                        <div class="form:input-prepend">
+                            <input id="email" path="email" type="text" class="form:input-large"
+                                   th:field="*{email}"/>
+                            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                  th:class="text-danger">email Error</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-2 col-lg-2" for="name" th:text="#{register.name}"/>
+                    <div class="col-lg-10">
+                        <input id="name" path="name" type="text" class="form:input-large" th:field="*{name}"/>
+                        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:class="text-danger">name
+                            Error</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-2" for="lastName" th:text="#{register.lastName}"/>
+                    <div class="col-lg-10">
+                        <div class="form:input-prepend">
+                            <input id="lastName" path="lastName" type="text" class="form:input-large"
+                                   th:field="*{lastName}"/>
+                            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                                  th:class="text-danger">lastName Error</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2" for="password" th:text="#{register.password}"/>
+                    <div class="col-lg-10">
+                        <input type="password" id="password" path="password" rows="4" th:field="*{password}"/>
+                        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                              th:class="text-danger">password Error</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-2" for="password" th:text="#{register.confirmPassword}"/>
+                    <div class="col-lg-10">
+                        <input id="confirmPassword" path="confirmPassword" type="password" class="form:input-large"
+                               th:field="*{confirmPassword}"/>
+                        <span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"
+                              th:class="text-danger">confirmPassword Error</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-10">
+                        <input type="submit" id="btnAdd" class="btn btn-primary" value="Dodaj"/>
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+    </section>
+</div>
+</body>
+</html>

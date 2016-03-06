@@ -1,0 +1,47 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Produkty</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="jumbotron">
+        <h1 th:text="#{products}"></h1>
+        <p th:text="${product.name}">
+
+        </p>
+    </div>
+    <section class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <img th:src="${product.imageURL}" alt="image" style="width:100%"/>
+            </div>
+
+            <div class="col-md-5">
+                <h3 th:text="${product.name}"></h3>
+                <p th:text="${product.description}"></p>
+
+                <p><strong>Liczba sztuk w magazynie: </strong>
+                    <span th:text="${product.unitsInStock}"/>
+                </p>
+                <h4 th:text="${product.price}+' PLN'"></h4>
+                <p>
+                    <a href="#" class="btn btn-warning btn-large" ng-click="addToCart('${product.productId}')">
+                        <span class="glyphicon-shopping-cart glyphicon"></span> Zamów teraz </a>
+                    <a href="#" class="btn btn-default">
+                        <span class="glyphicon-hand-right glyphicon"></span> Koszyk
+                    </a>
+
+                    <a th:href="@{/products}" class="btn btn-default">
+                        <span class="glyphicon-hand-left glyphicon"></span> Wstecz
+                    </a>
+
+                </p>
+
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

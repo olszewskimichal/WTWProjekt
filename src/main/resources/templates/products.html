@@ -1,0 +1,70 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Produkty</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="jumbotron">
+        <h1 th:text="#{products}"></h1>
+        <p>
+            Wszystkie produkty
+        </p>
+    </div>
+    <section class="container">
+        <div class="row">
+            <span th:each="product:${products}">
+                <div class="col-sm-5 col-md-3" style="padding-bottom: 15px">
+                    <div class="thumbnail">
+                        <img th:src="${product.imageURL}" alt="image" style=
+                                "width: 100%;height: 200px"/>
+                        <div class="caption">
+                            <h3 th:text="${product.name}"></h3>
+                            <p th:text="${product.price}+' PLN'"></p>
+                            <p th:text="'Liczba dostępnych sztuk: '+${product.unitsInStock}"></p>
+                            <p>
+                                <a th:href="${'/products/product/' + product.id}" class=" btn btn-primary">
+                                    <span class="glyphicon-info-sign glyphicon"></span> Szczegóły
+                                </a>
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </span>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-1">
+                <select class="form-control pagination" id="pageSizeSelect">
+                    <option th:each="pageSize : ${pageSizes}" th:text="${pageSize}" th:value="${pageSize}"
+                            th:selected="${pageSize} == ${selectedPageSize}"></option>
+                </select>
+            </div>
+            <div th:if="${products.getTotalPages() != 1}" class="form-group col-md-11 pagination-centered">
+                <ul class="pagination">
+                    <li th:class="${products.getNumber() == 0} ? disabled"><a class="pageLink"
+                                                                              th:href="@{/products?page=1}">&laquo;</a>
+                    </li>
+                    <li th:class="${products.getNumber() == 0} ? disabled"><a class="pageLink"
+                                                                              th:href="@{/products?page=} + ${products.getNumber()}">&larr;</a>
+                    </li>
+                    <li th:class="${products.getNumber() == (page - 1)} ? 'active pointer-disabled'"
+                        th:each="page : ${#numbers.sequence(pager.getStartPage(), pager.getEndPage())}"><a
+                            class="pageLink" th:href="@{/products?page=} + ${page}" th:text="${page}"></a></li>
+                    <li th:class="${products.getNumber() + 1 == products.getTotalPages()} ? disabled"><a
+                            class="pageLink"
+                            th:href="@{/products?page=} + ${products.getNumber() + 2}">&rarr;</a>
+                    </li>
+                    <li th:class="${products.getNumber() + 1 == products.getTotalPages()} ? disabled"><a
+                            class="pageLink"
+                            th:href="@{/products?page=} + ${products.getTotalPages()}">&raquo;</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>
+<script th:src="@{/js/pageSelector.js}"></script>
