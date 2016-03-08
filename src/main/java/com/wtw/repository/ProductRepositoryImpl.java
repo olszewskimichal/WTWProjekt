@@ -14,7 +14,7 @@ final public class ProductRepositoryImpl implements CustomProductRepository {
 
     @Override
     public <S extends Product> S createProduct(S product) {
-        if (Objects.nonNull(productRepository) && productRepository.findProductByName(product.getName()) == null) {
+        if (Objects.nonNull(productRepository) && productRepository.findProductById(product.getId()) == null) {
             return productRepository.save(product);
         }
         return null;

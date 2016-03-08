@@ -20,7 +20,7 @@ App.controller('ProductController', ['$scope', 'ProductService', function ($scop
     self.createProduct = function (product) {
         ProductService.createProduct(product)
             .then(
-                self.fetchAllProducts,
+                self.fetchAllProducts(),
                 function (errResponse) {
                     console.error('Error while creating User.');
                 }
@@ -53,6 +53,9 @@ App.controller('ProductController', ['$scope', 'ProductService', function ($scop
         if (self.product.id === null) {
             console.log('Saving New Product', self.product);
             self.createProduct(self.product);
+        } else {
+            self.updateProduct(self.product, self.product.id);
+            console.log('Product updated with id ', self.product.id);
         }
         self.reset();
     };

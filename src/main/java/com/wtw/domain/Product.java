@@ -62,7 +62,9 @@ public class Product {
         this.imageURL = product.getImageURL();
     }
 
-
+    public Long getId() {
+        return id;
+    }
     public String getName() {
         return name;
     }

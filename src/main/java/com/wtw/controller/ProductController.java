@@ -67,7 +67,7 @@ public class ProductController {
         }
     }
 
-    @RequestMapping(value = "products/product/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/products/product/{id}", method = RequestMethod.GET)
     public String showProductDetail(@PathVariable Long id, Model model) {
         logger.info("Wyswietlenie szczegółów produktu o id= " + id);
         try {
@@ -79,6 +79,16 @@ public class ProductController {
             logger.info(id.toString() + "\n" + model);
         }
         return "product";
+    }
+
+    @RequestMapping(value = "/testProduct")
+    public String test() {
+        return "test";
+    }
+
+    @RequestMapping(value = "/testUser")
+    public String test2() {
+        return "test2";
     }
 
 }

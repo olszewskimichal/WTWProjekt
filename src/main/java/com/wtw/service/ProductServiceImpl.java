@@ -81,7 +81,6 @@ public class ProductServiceImpl implements ProductService {
                 product.getUnitsInStock(),
                 product.getImageURL(),
                 id);
-
     }
 
     private int setReturnPage(final Integer pageNumber) {

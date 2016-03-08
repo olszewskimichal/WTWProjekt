@@ -18,7 +18,9 @@ public interface UserService {
 
     User create(UserCreateForm form);
 
-    //User editUser(UserEditForm userEditForm);
+    public void deleteUser(final Long id);
 
-    User update(User user);
+    public void createUser(final User user);
+
+    public void updateUser(final Long id, final User user);
 }

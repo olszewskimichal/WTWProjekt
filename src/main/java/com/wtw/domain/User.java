@@ -2,9 +2,6 @@ package com.wtw.domain;
 
 import javax.persistence.*;
 
-/**
- * Created by Admin on 2016-03-01.
- */
 @Entity
 public class User {
     @Id
