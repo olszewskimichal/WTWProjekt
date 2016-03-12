@@ -17,9 +17,6 @@ import org.springframework.web.context.request.WebRequest;
 
 import javax.validation.Valid;
 
-/**
- * Created by Admin on 2016-03-01.
- */
 @Controller
 public class RegisterController {
     private static final Logger logger = LoggerFactory.getLogger(RegisterController.class);
@@ -40,18 +37,15 @@ public class RegisterController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String registerSubmit(@ModelAttribute @Valid UserCreateForm userCreateForm, BindingResult result, WebRequest request) {
         logger.info("Dodanie uzytkownika " + userCreateForm.toString());
+        userCreateValidator.validate(userCreateForm, result);
         if (result.hasErrors()) {
+            logger.info("Blad przy dodawaniu uzytkownika\n" + result.getAllErrors().toString() + "\n");
             return "register";
         } else {
-            userCreateValidator.validate(userCreateForm, result);
-            if (result.hasErrors()) {
-                logger.info("Błedne dodawanie uzytkownika " + result.getAllErrors().toString());
-                return "register";
-            } else {
-                logger.info("Pomyslne dodanie uzytkownika");
-                User user = userService.create(userCreateForm);
-                return "index";
-            }
+            logger.info("Pomyslne dodanie uzytkownika");
+            User user = userService.create(userCreateForm);
+            return "index";
         }
+
     }
 }

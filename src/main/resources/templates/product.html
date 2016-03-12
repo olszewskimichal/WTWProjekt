@@ -12,7 +12,7 @@
 
         </p>
     </div>
-    <section class="container">
+    <section class="container" ng-app="cartApp">
         <div class="row">
             <div class="col-md-5">
                 <img th:src="${product.imageURL}" alt="image" style="width:100%"/>
@@ -26,10 +26,10 @@
                     <span th:text="${product.unitsInStock}"/>
                 </p>
                 <h4 th:text="${product.price}+' PLN'"></h4>
-                <p>
-                    <a href="#" class="btn btn-warning btn-large" ng-click="addToCart('${product.productId}')">
+                <p ng-controller="cartCtrl">
+                    <a href="#" class="btn btn-warning btn-large" th:attr="ng-click='addToCart('+${product.id}+');'">
                         <span class="glyphicon-shopping-cart glyphicon"></span> Zamów teraz </a>
-                    <a href="#" class="btn btn-default">
+                    <a th:href="@{/cart}" class="btn btn-default">
                         <span class="glyphicon-hand-right glyphicon"></span> Koszyk
                     </a>
 

@@ -3,6 +3,8 @@ package com.wtw.config;
 import com.wtw.domain.Product;
 import com.wtw.domain.Role;
 import com.wtw.domain.User;
+import com.wtw.repository.CartItemRepository;
+import com.wtw.repository.CartRepository;
 import com.wtw.repository.ProductRepository;
 import com.wtw.repository.UserRepository;
 import org.slf4j.Logger;
@@ -28,6 +30,12 @@ public class DevDBConfig {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private CartRepository cartRepository;
+
+    @Autowired
+    private CartItemRepository cartItemRepository;
 
     @PostConstruct
     public void populateDatabase() {
@@ -81,7 +89,16 @@ public class DevDBConfig {
         productRepository.save(iphone2);
         productRepository.save(laptop_dell2);
         productRepository.save(tablet_Nexus2);
-        productRepository.save(komputerIEM2);
+        komputerIEM2 = productRepository.save(komputerIEM2);
+
+        /*Cart cart = new Cart();
+        cartRepository.save(cart);
+        CartItem cartItem = new CartItem(komputerIEM2);
+        cartItem.setCart(cart);
+        cartItem = cartItemRepository.save(cartItem);
+        cart.addCartItem(cartItem);
+        cartRepository.updateCart(cart.getCartItems(), cart.getGrandTotal(), cart.getId());*/
+
 
     }
 

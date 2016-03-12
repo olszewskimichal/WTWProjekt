@@ -3,8 +3,11 @@
       layout:decorator="layout">
 <head>
     <title>Rejestracja</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"/>
+    <script src="js/app.js"></script>
+    <script src="js/registerController.js"></script>
 </head>
-<body>
+<body ng-app="myApp" class="ng-cloak">
 <div layout:fragment="content">
     <div class="jumbotron">
         <h1 th:text="#{register}"></h1>
@@ -12,9 +15,9 @@
             Zarejestruj nowe konto
         </p>
     </div>
-    <section class="container">
+    <section class="container" ng-controller="RegisterController as ctrl">
         <form action="#" th:action="@{/register}" th:object="${userCreateForm}" method="post"
-              class="form-horizontal"
+              class="form-horizontal" name="registerForm"
               enctype="multipart/form-data">
             <fieldset>
                 <legend>Dodaj nowego użytkownika</legend>
@@ -26,19 +29,31 @@
                     <label class="control-label col-lg-2" for="email" th:text="#{register.email}"/>
                     <div class="col-lg-10">
                         <div class="form:input-prepend">
-                            <input id="email" path="email" type="text" class="form:input-large"
+                            <input id="email" path="email" type="email" class="form:input-large"
+                                   ng-model="ctrl.register.email" required="required" placeholder="Podaj adres email"
                                    th:field="*{email}"/>
-                            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
-                                  th:class="text-danger">email Error</span>
+                            <span class="has-error" ng-show="registerForm.email.$dirty">
+                                <span ng-show="registerForm.email.$invalid"
+                                      th:text="#{Email.userCreateForm.email}"
+                                      th:class="text-danger">email Error
+                                </span>
+                            </span>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-lg-2 col-lg-2" for="name" th:text="#{register.name}"/>
                     <div class="col-lg-10">
-                        <input id="name" path="name" type="text" class="form:input-large" th:field="*{name}"/>
-                        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:class="text-danger">name
-                            Error</span>
+                        <input id="name" path="name" type="text" class="form:input-large"
+                               ng-model="ctrl.register.name" required="required" placeholder="Podaj imię"
+                               ng-minlength="4" ng-maxlength="20"
+                               th:field="*{name}"/>
+                        <span class="has-error" ng-show="registerForm.name.$dirty">
+                            <span ng-show="registerForm.name.$invalid"
+                                  th:text="#{Size.userCreateForm.name}"
+                                  th:class="text-danger">name Error
+                            </span>
+                        </span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -46,9 +61,15 @@
                     <div class="col-lg-10">
                         <div class="form:input-prepend">
                             <input id="lastName" path="lastName" type="text" class="form:input-large"
+                                   ng-model="ctrl.register.lastName" required="required" placeholder="Podaj nazwisko"
+                                   ng-minlength="4" ng-maxlength="30"
                                    th:field="*{lastName}"/>
-                            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
-                                  th:class="text-danger">lastName Error</span>
+                            <span class="has-error" ng-show="registerForm.lastName.$dirty">
+                                <span ng-show="registerForm.lastName.$invalid"
+                                      th:text="#{Size.userCreateForm.lastName}"
+                                      th:class="text-danger">lastName Error
+                                </span>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -56,18 +77,24 @@
                 <div class="form-group">
                     <label class="control-label col-lg-2" for="password" th:text="#{register.password}"/>
                     <div class="col-lg-10">
-                        <input type="password" id="password" path="password" rows="4" th:field="*{password}"/>
-                        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
-                              th:class="text-danger">password Error</span>
+                        <input type="password" id="password" ng-model="ctrl.register.password"
+                               required="required"
+                               ng-pattern="/^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/"
+                               th:field="*{password}" placeholder="Podaj hasło"/>
+                        <span class="has-error" ng-show="registerForm.password.$dirty">
+                                <span ng-show="registerForm.password.$error.pattern"
+                                      th:text="#{Pattern.userCreateForm.password}"
+                                      th:class="text-danger">Password Error
+                                </span>
+                        </span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-lg-2" for="password" th:text="#{register.confirmPassword}"/>
                     <div class="col-lg-10">
                         <input id="confirmPassword" path="confirmPassword" type="password" class="form:input-large"
+                               ng-model="ctrl.register.confirmPassword"
                                th:field="*{confirmPassword}"/>
-                        <span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"
-                              th:class="text-danger">confirmPassword Error</span>
                     </div>
                 </div>
                 <div class="form-group">
