@@ -51,7 +51,7 @@ public class ProductController {
         model.addAttribute("selectedPageSize", evalPageSize);
         model.addAttribute("pageSizes", PAGE_SIZES);
         model.addAttribute("pager", pager);
-        logger.info(products.toString());
+        logger.info(products.getNumberOfElements() + "");
         return "products";
     }
 

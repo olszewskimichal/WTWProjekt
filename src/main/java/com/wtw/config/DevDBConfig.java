@@ -90,6 +90,27 @@ public class DevDBConfig {
         productRepository.save(laptop_dell2);
         productRepository.save(tablet_Nexus2);
         komputerIEM2 = productRepository.save(komputerIEM2);
+        Product iphone3 = new Product("iPhone 5s3", "Apple iPhone 5s, " +
+                "smartfon z 4-calowym ekranem o rozdzielczości 640×1136 i 8-megapikselowym aparatem",
+                new BigDecimal(500), 1000, "http://pdadb.net/img/gallery/big/apple_iphone_5_ios7_main.png");
+
+        Product laptop_dell3 = new Product("Dell Inspiron3",
+                "Dell Inspiron, 14-calowy laptop (czarny) z procesorami Intel Core 3. generacji", new BigDecimal(700), 1000,
+                "http://ecx.images-amazon.com/images/I/81LcrgMpIcL._SL1500_.jpg");
+
+        Product tablet_Nexus3 = new Product("Nexus 73",
+                "Google Nexus 7 jest najlżejszym 7-calowym tabletem z 4-rdzeniowym procesorem Qualcomm Snapdragon™ S4 Pro",
+                new BigDecimal(300), 1000,
+                "http://images.morele.net/full/706266_2_f.png");
+        Product komputerIEM3 = new Product("Infinity IEM 20153",
+                "Limitowana seria komputerów Komputronik Infinity Intel Extreme Masters powstała z myślą o finałach Mistrzostw Intel Extreme Masters 2015 które odbyły się w Katowicach.",
+                new BigDecimal(3900), 100,
+                "http://www.power-cy.com/wp-content/uploads/2014/07/pc.png");
+
+        productRepository.save(iphone3);
+        productRepository.save(laptop_dell3);
+        productRepository.save(tablet_Nexus3);
+        productRepository.save(komputerIEM3);
 
         /*Cart cart = new Cart();
         cartRepository.save(cart);

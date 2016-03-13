@@ -5,6 +5,8 @@ import com.wtw.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +17,11 @@ import java.util.List;
 @RequestMapping("/api/products")
 public class ProductRestController {
     private static final Logger logger = LoggerFactory.getLogger(ProductRestController.class);
+    private static final int BUTTONS_TO_SHOW = 5;
+    private static final int INITIAL_PAGE = 0;
+    private static final int INITIAL_PAGE_SIZE = 4;
     private final ProductService productService;
+
 
     @Autowired
     public ProductRestController(ProductService productService) {
@@ -32,7 +38,20 @@ public class ProductRestController {
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Product> getProducts(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "limit", required = false) Integer limit, @RequestParam(value = "order", required = false) String sort) {
         logger.info("Pobierz produkty wg niektorych szczegolow " + productService.getProducts(page, limit, sort).toString());
-        return productService.getProducts(page, limit, sort);
+        int evalPageSize = limit == null ? INITIAL_PAGE_SIZE : limit;
+        int evalPage = (page == null || page < 1) ? INITIAL_PAGE : page - 1;
+        Page<Product> products = productService.findAllPageable(new PageRequest(evalPage, evalPageSize));
+        return products.getContent();
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/get/totalPages", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Integer getTotalPages(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "limit", required = false) Integer limit) {
+        int evalPageSize = limit == null ? INITIAL_PAGE_SIZE : limit;
+        int evalPage = (page == null || page < 1) ? INITIAL_PAGE : page - 1;
+        Page<Product> products = productService.findAllPageable(new PageRequest(evalPage, evalPageSize));
+        logger.info(products.getTotalPages() + "");
+        return products.getTotalPages();
     }
 
     @CrossOrigin

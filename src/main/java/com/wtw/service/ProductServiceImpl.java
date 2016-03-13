@@ -58,6 +58,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public List<Product> getProducts(final Integer page, final Integer size, final String sort) {
+        System.out.println("asdassa" + size + " " + page);
         PageRequest pageRequest = new PageRequest(setReturnPage(page), setProductOnPageLimit(setReturnSize(size)), setSortDirection(sort), DEFAULT_SORT_BY_ID);
         return productRepository.findAll(pageRequest).getContent().stream().map(Product::new).collect(Collectors.toList());
     }
