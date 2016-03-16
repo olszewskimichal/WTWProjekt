@@ -1,6 +1,9 @@
 package com.wtw.repository;
 
+import com.wtw.domain.Category;
 import com.wtw.domain.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -21,6 +24,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>, CustomP
 
     @Transactional
     Long deleteProductById(Long id);
+
+    Page<Product> findPageableByCategory(Pageable pageable, Category category);
 
     @Transactional
     @Modifying

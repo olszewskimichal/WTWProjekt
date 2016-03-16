@@ -1,5 +1,6 @@
 package com.wtw.service;
 
+import com.wtw.domain.Category;
 import com.wtw.domain.Product;
 import com.wtw.form.ProductCreateForm;
 import com.wtw.repository.ProductRepository;
@@ -55,6 +56,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<Product> findAllPageable(Pageable pageable) {
         return productRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Product> findPageableByCategory(Pageable pageable, Category category) {
+        return productRepository.findPageableByCategory(pageable, category);
     }
 
     public List<Product> getProducts(final Integer page, final Integer size, final String sort) {

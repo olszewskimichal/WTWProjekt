@@ -14,10 +14,12 @@ public class Product {
     private final String name;
     private final String description;
     private final BigDecimal price;
-    private final String category;
     private final long unitsInStock;
     private final long unitsInOrder;
     private final String imageURL;
+    @ManyToOne
+    @JoinColumn(name = "categoryId")
+    private Category category;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -42,11 +44,29 @@ public class Product {
             @JsonProperty("description") String description,
             @JsonProperty("price") BigDecimal price,
             @JsonProperty("unitsInStock") long unitsInStock,
-            @JsonProperty("imageURL") String imageURL) {
+            @JsonProperty("imageURL") String imageURL
+    ) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.category = null;
+        this.unitsInStock = unitsInStock;
+        this.unitsInOrder = 0;
+        this.imageURL = imageURL;
+    }
+
+    @JsonCreator
+    public Product(
+            @JsonProperty("name") String name,
+            @JsonProperty("description") String description,
+            @JsonProperty("price") BigDecimal price,
+            @JsonProperty("unitsInStock") long unitsInStock,
+            @JsonProperty("imageURL") String imageURL,
+            @JsonProperty("category") Category category) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.category = category;
         this.unitsInStock = unitsInStock;
         this.unitsInOrder = 0;
         this.imageURL = imageURL;
@@ -58,7 +78,7 @@ public class Product {
         this.name = product.getName();
         this.description = product.getDescription();
         this.price = product.getPrice();
-        this.category = null;
+        this.category = product.getCategory();
         this.unitsInStock = product.getUnitsInStock();
         this.unitsInOrder = 0;
         this.imageURL = product.getImageURL();
@@ -87,13 +107,20 @@ public class Product {
         return imageURL;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
-                ", category='" + category + '\'' +
                 ", unitsInStock=" + unitsInStock +
                 ", unitsInOrder=" + unitsInOrder +
                 ", imageURL='" + imageURL + '\'' +

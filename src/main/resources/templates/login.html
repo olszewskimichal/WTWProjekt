@@ -1,6 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
       layout:decorator="layout">
 <head>
     <title>Logowanie</title>
@@ -56,15 +55,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div sec:authorize="isAuthenticated()">
-            <p th:text="#{login.logged_user}"/>
-
-            <p sec:authentication="name">user</p>
-
-            <form th:action="@{/logout}" method="post">
-                <input type="submit" th:value="#{login.logout_submit}"></input>
-            </form>
         </div>
     </section>
     <div class="modal fade forget-modal" tabindex="-1" role="dialog" aria-labelledby="myForgetModalLabel"

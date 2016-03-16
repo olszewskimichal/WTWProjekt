@@ -21,8 +21,7 @@ cartApp.controller('cartCtrl', function ($scope, $http) {
             });
     };
     $scope.changeItems = function (itemId) {
-        var quantity = document.getElementById('quantitySelect')[document.getElementById('quantitySelect').selectedIndex].innerHTML;
-        alert(quantity);
+        var quantity = document.getElementById('quantitySelect' + itemId)[document.getElementById('quantitySelect' + itemId).selectedIndex].innerHTML;
         $http.put('/api/carts/cart/updateQuantity?idProd=' + itemId + "&quantity=" + quantity)
             .success(function (data) {
                 $http.get('/api/carts/cart/get').success(function (data) {

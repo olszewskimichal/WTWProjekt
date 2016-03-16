@@ -1,7 +1,7 @@
 var productApp = angular.module('productApp', []);
 productApp.filter('range', function () {
     return function (input, min, max) {
-        min = parseInt(min); //Make string input int
+        min = parseInt(min);
         max = parseInt(max);
         for (var i = min; i <= max; i += min)
             input.push(i);
@@ -28,6 +28,24 @@ productApp.controller('productListCtrl', function ($scope, $http) {
     $scope.pageNumber = 0;
     $scope.pageSize = null;
     $scope.totalPages = null;
+    $scope.categoryName = "all";
+
+    $scope.getCategory = function () {
+        $http.get('/api/category/all')
+            .success(function (data) {
+                $scope.categoryData = data;
+            });
+    }
+    $scope.setCategory = function (categoryName, id) {
+        if (categoryName === null) $scope.categoryName = "all";
+        else $scope.categoryName = categoryName;
+        var quantity = document.getElementById('pageSizeSelect')[document.getElementById('pageSizeSelect').selectedIndex].innerHTML;
+        $scope.getTotalPages();
+        $http.get('/api/products?page=' + $scope.pageNumber + "&limit=" + quantity + "&category=" + categoryName)
+            .success(function (data) {
+                $scope.data = data;
+            });
+    }
 
     $scope.getProducts = function () {
         $http.get('/api/products')
@@ -42,7 +60,7 @@ productApp.controller('productListCtrl', function ($scope, $http) {
     };
     $scope.getTotalPages = function () {
         var quantity = document.getElementById('pageSizeSelect')[document.getElementById('pageSizeSelect').selectedIndex].innerHTML;
-        $http.get('/api/products/get/totalPages?page=' + $scope.pageNumber + '&limit=' + quantity).success(function (data2) {
+        $http.get('/api/products/get/totalPages?page=' + $scope.pageNumber + '&limit=' + quantity + "&category=" + $scope.categoryName).success(function (data2) {
                 $scope.totalPages = data2;
                 return $scope.totalPages;
             }
@@ -52,7 +70,7 @@ productApp.controller('productListCtrl', function ($scope, $http) {
 
     $scope.productFromPageMax = function (page, max) {
         var quantity = document.getElementById('pageSizeSelect')[document.getElementById('pageSizeSelect').selectedIndex].innerHTML;
-        $http.get('/api/products?page=' + page + "&limit=" + quantity)
+        $http.get('/api/products?page=' + page + "&limit=" + quantity + "&category=" + $scope.categoryName)
             .success(function (data) {
                 $scope.pageNumber = page - 1;
                 $scope.data = data;
@@ -61,7 +79,8 @@ productApp.controller('productListCtrl', function ($scope, $http) {
 
     $scope.changePageSize = function () {
         var quantity = document.getElementById('pageSizeSelect')[document.getElementById('pageSizeSelect').selectedIndex].innerHTML;
-        $http.get('/api/products?page=' + $scope.pageNumber + 1 + "&limit=" + quantity)
+        $scope.pageNumber = 0;
+        $http.get('/api/products?page=' + $scope.pageNumber + 1 + "&limit=" + quantity + "&category=" + $scope.categoryName)
             .success(function (data) {
                 $scope.data = data;
                 $scope.getTotalPages();

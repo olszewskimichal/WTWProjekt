@@ -1,12 +1,10 @@
 package com.wtw.config;
 
+import com.wtw.domain.Category;
 import com.wtw.domain.Product;
 import com.wtw.domain.Role;
 import com.wtw.domain.User;
-import com.wtw.repository.CartItemRepository;
-import com.wtw.repository.CartRepository;
-import com.wtw.repository.ProductRepository;
-import com.wtw.repository.UserRepository;
+import com.wtw.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +35,9 @@ public class DevDBConfig {
     @Autowired
     private CartItemRepository cartItemRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @PostConstruct
     public void populateDatabase() {
         logger.info("ładowanie bazy testowej");
@@ -48,10 +49,13 @@ public class DevDBConfig {
         user = new User("SuperAdmin", "superadmin", "aaa3@o2.pl", new BCryptPasswordEncoder().encode("a"));
         repository.save(user);
 
+        Category category = new Category("Smartfony");
+        Category category1 = new Category("Komputery");
+        Category category2 = new Category("Tablety");
+
         Product iphone = new Product("iPhone 5s", "Apple iPhone 5s, " +
                 "smartfon z 4-calowym ekranem o rozdzielczości 640×1136 i 8-megapikselowym aparatem",
                 new BigDecimal(500), 1000, "http://pdadb.net/img/gallery/big/apple_iphone_5_ios7_main.png");
-
         Product laptop_dell = new Product("Dell Inspiron",
                 "Dell Inspiron, 14-calowy laptop (czarny) z procesorami Intel Core 3. generacji", new BigDecimal(700), 1000,
                 "http://ecx.images-amazon.com/images/I/81LcrgMpIcL._SL1500_.jpg");
@@ -64,11 +68,6 @@ public class DevDBConfig {
                 "Limitowana seria komputerów Komputronik Infinity Intel Extreme Masters powstała z myślą o finałach Mistrzostw Intel Extreme Masters 2015 które odbyły się w Katowicach.",
                 new BigDecimal(3900), 100,
                 "http://www.power-cy.com/wp-content/uploads/2014/07/pc.png");
-
-        productRepository.save(iphone);
-        productRepository.save(laptop_dell);
-        productRepository.save(tablet_Nexus);
-        productRepository.save(komputerIEM);
         Product iphone2 = new Product("iPhone 5sS", "Apple iPhone 5s, " +
                 "smartfon z 4-calowym ekranem o rozdzielczości 640×1136 i 8-megapikselowym aparatem",
                 new BigDecimal(500), 1000, "http://pdadb.net/img/gallery/big/apple_iphone_5_ios7_main.png");
@@ -85,11 +84,6 @@ public class DevDBConfig {
                 "Limitowana seria komputerów Komputronik Infinity Intel Extreme Masters powstała z myślą o finałach Mistrzostw Intel Extreme Masters 2015 które odbyły się w Katowicach.",
                 new BigDecimal(3900), 100,
                 "http://www.purepc.pl/files/Image/news/2015/03/iem_2015_pc/purepc_iem_2015_pc_4.jpg");
-
-        productRepository.save(iphone2);
-        productRepository.save(laptop_dell2);
-        productRepository.save(tablet_Nexus2);
-        komputerIEM2 = productRepository.save(komputerIEM2);
         Product iphone3 = new Product("iPhone 5s3", "Apple iPhone 5s, " +
                 "smartfon z 4-calowym ekranem o rozdzielczości 640×1136 i 8-megapikselowym aparatem",
                 new BigDecimal(500), 1000, "http://pdadb.net/img/gallery/big/apple_iphone_5_ios7_main.png");
@@ -106,19 +100,51 @@ public class DevDBConfig {
                 "Limitowana seria komputerów Komputronik Infinity Intel Extreme Masters powstała z myślą o finałach Mistrzostw Intel Extreme Masters 2015 które odbyły się w Katowicach.",
                 new BigDecimal(3900), 100,
                 "http://www.power-cy.com/wp-content/uploads/2014/07/pc.png");
+        iphone.setCategory(category);
+        iphone2.setCategory(category);
+        iphone3.setCategory(category);
+        category.addProduct(iphone3);
+        category.addProduct(iphone2);
+        category.addProduct(iphone);
 
-        productRepository.save(iphone3);
-        productRepository.save(laptop_dell3);
-        productRepository.save(tablet_Nexus3);
-        productRepository.save(komputerIEM3);
+        laptop_dell.setCategory(category1);
+        laptop_dell3.setCategory(category1);
+        laptop_dell2.setCategory(category1);
+        komputerIEM.setCategory(category1);
+        komputerIEM3.setCategory(category1);
+        komputerIEM2.setCategory(category1);
+        category1.addProduct(laptop_dell);
+        category1.addProduct(laptop_dell2);
+        category1.addProduct(laptop_dell3);
+        category1.addProduct(komputerIEM);
+        category1.addProduct(komputerIEM2);
+        category1.addProduct(komputerIEM3);
 
+        tablet_Nexus.setCategory(category2);
+        tablet_Nexus2.setCategory(category2);
+        tablet_Nexus3.setCategory(category2);
+        category2.addProduct(tablet_Nexus);
+        category2.addProduct(tablet_Nexus2);
+        category2.addProduct(tablet_Nexus3);
+
+        category = categoryRepository.save(category);
+        category1 = categoryRepository.save(category1);
+        category2 = categoryRepository.save(category2);
+        logger.info(category.toString());
+        logger.info(category1.toString());
+        logger.info(category2.toString());
+        logger.info(tablet_Nexus.getCategory().toString());
         /*Cart cart = new Cart();
         cartRepository.save(cart);
         CartItem cartItem = new CartItem(komputerIEM2);
         cartItem.setCart(cart);
-        cartItem = cartItemRepository.save(cartItem);
+
+        logger.info(cart.toString());
+        logger.info(cartItem.toString());
         cart.addCartItem(cartItem);
-        cartRepository.updateCart(cart.getCartItems(), cart.getGrandTotal(), cart.getId());*/
+        cart = cartRepository.updateCart(cart.getCartItems(), cart.getGrandTotal(), cart.getId());
+        logger.info(cart.toString());
+        logger.info(cartItem.toString());*/
 
 
     }

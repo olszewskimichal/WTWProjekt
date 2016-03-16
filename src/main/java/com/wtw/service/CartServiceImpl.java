@@ -43,7 +43,6 @@ public class CartServiceImpl implements CartService {
         Cart cart = getShoppingCartInSession();
         cart.addCartItem(item);
         logger.info("Koszyk po dodaniu produktu wyglada =" + cart.toString());
-
         updateCartInSession(cart);
         return cart;
     }

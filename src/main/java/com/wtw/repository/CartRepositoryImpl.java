@@ -25,6 +25,7 @@ public class CartRepositoryImpl implements CustomCartRepository {
     public Cart updateCart(List<CartItem> cartItems, BigDecimal grandTotal, Long id) {
         System.out.println("CHUJ CHUJ" + cartItems);
         Cart cart = cartRepository.findCartById(id);
+        System.out.println(cart.toString());
         cart.setCartItems(cartItems);
         cart.setGrandTotal(grandTotal);
         System.out.println("CO tu sie odpierdala" + cart.toString());

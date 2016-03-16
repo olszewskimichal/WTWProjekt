@@ -42,6 +42,7 @@ public class Cart {
                 }
             }
         } else {
+            dodaj = false;
             result.add(item);
         }
         if (dodaj) {
