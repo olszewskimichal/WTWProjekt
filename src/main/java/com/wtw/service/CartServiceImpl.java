@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -74,7 +75,9 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart validate(Long cartId) {
+        logger.info("Walidacja koszyka ?"+cartId);
         Cart cart = cartRepository.findCartById(cartId);
+        logger.info("Walidacja koszyk wyglada = "+cart.toString());
         if (cart == null || cart.getCartItems().size() == 0) {
             throw new InvalidCartException(cartId);
         }
@@ -84,8 +87,9 @@ public class CartServiceImpl implements CartService {
     @Override
     public void deleteElementsFromCart(Long id) {
         Cart cart = cartRepository.findCartById(id);
-        cart.getCartItems().clear();
+        cart.setCartItems(new ArrayList<>());
         cart.setGrandTotal(BigDecimal.ZERO);
+        logger.info("delete elements"+cart.toString());
         cartRepository.updateCart(cart.getCartItems(), cart.getGrandTotal(), id);
         updateCartInSession(cart);
     }

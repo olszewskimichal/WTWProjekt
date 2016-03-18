@@ -1,0 +1,96 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head>
+    <title>Potwierdzenie zamówienia</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="jumbotron">
+        <h1>
+            Rachunek
+        </h1>
+        <p>
+            Potwierdzenie zamówienia
+        </p>
+    </div>
+    <div class="container">
+        <div class="row">
+            <form modelAttribute="order" class="form-horizontal">
+                <div class="well col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
+                    <div class="text-center">
+                        <h1>Rachunek</h1>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <address>
+                                <strong>Adres do wysyłki</strong>
+                                <br/>
+                                <th:block
+                                        th:text="''+${order.shippingDetail.streetName}+' '+${order.shippingDetail.doorNo}+'/'+${order.shippingDetail.flatNo}"/>
+                                <br/>
+                                <th:block
+                                        th:text="''+${order.shippingDetail.zipCode}+' '+${order.shippingDetail.areaName}"/>
+                                <br/>
+                                <th:block th:text="${order.shippingDetail.state}"/>
+                                <br/>
+                            </address>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+                            <p>
+                                <em th:text="'Data wysyłki: '+${order.shippingDetail.date}"></em>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Produkt</th>
+                                <th>#</th>
+                                <th class="text-center">Cena</th>
+                                <th class="text-center">Łącznie</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <span th:each="cartItem:${order.cart.cartItems}">
+                                <tr>
+                                    <td class="col-md-6"><em th:text="${cartItem.product.name}"></em></td>
+                                    <td class="col-md-1" style="text-align: center" th:text="${cartItem.quantity}">
+                                    </td>
+                                    <td class="col-md-1 text-center" th:text="${cartItem.product.price}+' PLN'"></td>
+                                    <td class="col-md-1 text-center" th:text="${cartItem.totalPrice}+' PLN'"></td>
+                                </tr>
+                            </span>
+
+                                <tr>
+                                    <td> </td>
+                                    <td> </td>
+                                    <td class="text-right"><h4>
+                                        <strong>Razem: </strong>
+                                    </h4></td>
+                                    <td class="text-center text-danger"><h4>
+                                        <strong th:text="${order.cart.grandTotal}+' PLN'"></strong>
+                                    </h4></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button id="back" class="btn btn-default">
+                            wstecz
+                        </button>
+
+                        <button type="submit" class="btn btn-success">
+                            Zatwierdź   <span class="glyphicon glyphicon-chevron-right"></span>
+                        </button>
+                        <button id="btnCancel" class="btn btn-default"
+                                >Anuluj
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

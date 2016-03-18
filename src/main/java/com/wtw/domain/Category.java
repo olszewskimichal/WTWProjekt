@@ -3,11 +3,12 @@ package com.wtw.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Category {
+public class Category implements Serializable {
     private final String name;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

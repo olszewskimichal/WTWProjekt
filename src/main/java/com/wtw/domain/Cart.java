@@ -3,21 +3,26 @@ package com.wtw.domain;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
-public class Cart {
+public class Cart implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "Id_CART")
     private Long id;
-    @OneToMany(targetEntity = CartItem.class, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = CartItem.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<CartItem> cartItems;
     private BigDecimal grandTotal;
+
+    @OneToOne
+    @JoinColumn(name = "id")
+    private CartItem cartItem;
 
     public Cart() {
         cartItems = new ArrayList<>();

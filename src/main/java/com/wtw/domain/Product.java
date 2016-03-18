@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  * Created by Admin on 2016-02-26.
  */
 @Entity
-public class Product {
+public class Product implements Serializable {
     private final String name;
     private final String description;
     private final BigDecimal price;

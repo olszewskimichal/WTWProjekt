@@ -6,9 +6,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-/**
- * Created by Admin on 2016-02-29.
- */
+
 public class UserCreateForm {
 
     @Size(min = 4, max = 20)

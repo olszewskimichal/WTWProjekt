@@ -1,0 +1,189 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head>
+    <title>Dane do wysyłki</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"/>
+    <script src="/js/app.js"></script>
+    <script src="/js/customerInfoController.js"></script>
+</head>
+<body ng-app="myApp" class="ng-cloak">
+<div layout:fragment="content">
+    <div class="jumbotron">
+        <h1>
+            Klient
+        </h1>
+        <p>
+            Dane do wysyłki
+        </p>
+    </div>
+    <section class="container" ng-controller="CustomerInfoController as ctrl">
+        <form action="#" th:action="@{/order/collectCustomerInfo}" th:object="${customerInfoForm}" method="post"
+              class="form-horizontal" name="customerInfoForm"
+              enctype="multipart/form-data">
+            <fieldset>
+                <legend>Podaj dane do wysyłki</legend>
+                <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger">
+                    <p th:each="err:${#fields.allErrors()}" th:text="${err}">...</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2 col-lg-2" for="name">Imię</label>
+                    <div class="col-lg-10">
+                        <input id="name" path="name" type="text" class="form:input-large"
+                               ng-model="ctrl.customerInfo.name" required="required" placeholder="Podaj imię"
+                               ng-minlength="4" ng-maxlength="20"
+                               th:field="*{name}"/>
+                        <span class="has-error" ng-show="customerInfoForm.name.$dirty">
+                            <span ng-show="customerInfoForm.name.$invalid"
+                                  th:text="#{Size.customerInfoForm.name}"
+                                  th:class="text-danger">name Error
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-2" for="lastName">Nazwisko</label>
+                    <div class="col-lg-10">
+                        <div class="form:input-prepend">
+                            <input id="lastName" path="lastName" type="text" class="form:input-large"
+                                   ng-model="ctrl.customerInfo.lastName" required="required"
+                                   placeholder="Podaj nazwisko"
+                                   ng-minlength="4" ng-maxlength="30"
+                                   th:field="*{lastName}"/>
+                            <span class="has-error" ng-show="customerInfoForm.lastName.$dirty">
+                                <span ng-show="customerInfoForm.lastName.$invalid"
+                                      th:text="#{Size.customerInfoForm.lastName}"
+                                      th:class="text-danger">lastName Error
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2 col-lg-2" for="name">Numer domu</label>
+                    <div class="col-lg-10">
+                        <input id="doorNo" path="doorNo" type="text" class="form:input-large"
+                               ng-model="ctrl.customerInfo.doorNo" required="required" placeholder="Podaj numer domu"
+                               ng-pattern="/^([1-9][0-9]*)$/"
+                               th:field="*{doorNo}"/>
+                        <span class="has-error" ng-show="customerInfoForm.doorNo.$dirty">
+                            <span ng-show="customerInfoForm.doorNo.$invalid"
+                                  th:text="#{Pattern.customerInfoForm.doorNo}"
+                                  th:class="text-danger">name Error
+                            </span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2 col-lg-2" for="name">Numer mieszkania</label>
+                    <div class="col-lg-10">
+                        <input id="flatNo" path="flatNo" type="text" class="form:input-large"
+                               ng-model="ctrl.customerInfo.flatNo" required="required"
+                               placeholder="Podaj numer mieszkania"
+                               ng-pattern="/^([1-9][0-9]*)$/"
+                               th:field="*{flatNo}"/>
+                        <span class="has-error" ng-show="customerInfoForm.flatNo.$dirty">
+                            <span ng-show="customerInfoForm.flatNo.$invalid"
+                                  th:text="#{Pattern.customerInfoForm.flatNo}"
+                                  th:class="text-danger">name Error
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-2 col-lg-2" for="name">Ulica</label>
+                    <div class="col-lg-10">
+                        <input id="streetName" path="streetName" type="text" class="form:input-large"
+                               ng-model="ctrl.customerInfo.streetName" required="required"
+                               placeholder="Podaj nazwe ulicy"
+                               ng-minlength="4" ng-maxlength="20"
+                               th:field="*{streetName}"/>
+                        <span class="has-error" ng-show="customerInfoForm.streetName.$dirty">
+                            <span ng-show="customerInfoForm.streetName.$invalid"
+                                  th:text="#{Size.customerInfoForm.streetName}"
+                                  th:class="text-danger">name Error
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-2 col-lg-2" for="name">Miasto</label>
+                    <div class="col-lg-10">
+                        <input id="areaName" path="areaName" type="text" class="form:input-large"
+                               ng-model="ctrl.customerInfo.areaName" required="required"
+                               placeholder="Podaj nazwe miasta"
+                               ng-minlength="4" ng-maxlength="20"
+                               th:field="*{areaName}"/>
+                        <span class="has-error" ng-show="customerInfoForm.areaName.$dirty">
+                            <span ng-show="customerInfoForm.areaName.$invalid"
+                                  th:text="#{Size.customerInfoForm.areaName}"
+                                  th:class="text-danger">name Error
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-2 col-lg-2" for="name">Województwo</label>
+                    <div class="col-lg-10">
+                        <input id="state" path="state" type="text" class="form:input-large"
+                               ng-model="ctrl.customerInfo.state" required="required"
+                               placeholder="Podaj nazwe województwa"
+                               ng-minlength="4" ng-maxlength="20"
+                               th:field="*{state}"/>
+                        <span class="has-error" ng-show="customerInfoForm.state.$dirty">
+                            <span ng-show="customerInfoForm.state.$invalid"
+                                  th:text="#{Size.customerInfoForm.state}"
+                                  th:class="text-danger">name Error
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-2 col-lg-2" for="name">Kod pocztowy</label>
+                    <div class="col-lg-10">
+                        <input id="zipCode" path="zipCode" type="text" class="form:input-large"
+                               ng-model="ctrl.customerInfo.zipCode" required="required" placeholder="Podaj kod pocztowy"
+                               ng-pattern="/^(\d{2}-\d{3})$/"
+                               th:field="*{zipCode}"/>
+                        <span class="has-error" ng-show="customerInfoForm.zipCode.$dirty">
+                            <span ng-show="customerInfoForm.zipCode.$invalid"
+                                  th:text="#{Pattern.customerInfoForm.zipCode}"
+                                  th:class="text-danger">name Error
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-2 col-lg-2" for="name">Numer telefonu</label>
+                    <div class="col-lg-10">
+                        <input id="phoneNumber" path="phoneNumber" type="text" class="form:input-large"
+                               ng-model="ctrl.customerInfo.phoneNumber" required="required"
+                               placeholder="Podaj nr telefonu"
+                               ng-pattern="/^(\(0-\d\d\) \d\d\d \d\d \d\d)|(\d\d\d \d\d\d \d\d\d)$/"
+                               th:field="*{phoneNumber}"/>
+                        <span class="has-error" ng-show="customerInfoForm.phoneNumber.$dirty">
+                            <span ng-show="customerInfoForm.phoneNumber.$invalid"
+                                  th:text="#{Pattern.customerInfoForm.phoneNumber}"
+                                  th:class="text-danger">name Error
+                            </span>
+                        </span>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-10">
+                        <input type="submit" id="btnAdd" class="btn btn-primary" value="Dodaj"/>
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+    </section>
+
+
+</div>
+</body>
+</html>
