@@ -1,9 +1,6 @@
 package com.wtw.config;
 
-import com.wtw.domain.Category;
-import com.wtw.domain.Product;
-import com.wtw.domain.Role;
-import com.wtw.domain.User;
+import com.wtw.domain.*;
 import com.wtw.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -134,17 +131,30 @@ public class DevDBConfig {
         logger.info(category1.toString());
         logger.info(category2.toString());
         logger.info(tablet_Nexus.getCategory().toString());
-        /*Cart cart = new Cart();
+        Cart cart = new Cart();
         cartRepository.save(cart);
         CartItem cartItem = new CartItem(komputerIEM2);
-        cartItem.setCart(cart);
-
         logger.info(cart.toString());
         logger.info(cartItem.toString());
         cart.addCartItem(cartItem);
         cart = cartRepository.updateCart(cart.getCartItems(), cart.getGrandTotal(), cart.getId());
         logger.info(cart.toString());
-        logger.info(cartItem.toString());*/
+        logger.info(cartItem.toString());
+
+       /* cartItemRepository.save(cartItem);
+        cartItemRepository.save(new CartItem(komputerIEM2));
+        logger.info("TU wchodzi?");*/
+
+
+        /*Cart cart1 = new Cart();
+        cartRepository.save(cart1);
+        logger.info(cart1.toString());
+        cart1.addCartItem(new CartItem(komputerIEM2));
+        logger.info(cart1.toString());
+        cart1=cartRepository.updateCart(cart1.getCartItems(),cart1.getGrandTotal(),cart1.getId());
+        logger.info(cart1.toString());*/
+
+
 
 
     }

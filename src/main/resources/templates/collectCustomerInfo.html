@@ -161,7 +161,7 @@
                         <input id="phoneNumber" path="phoneNumber" type="text" class="form:input-large"
                                ng-model="ctrl.customerInfo.phoneNumber" required="required"
                                placeholder="Podaj nr telefonu"
-                               ng-pattern="/^(\(0-\d\d\) \d\d\d \d\d \d\d)|(\d\d\d \d\d\d \d\d\d)$/"
+                               ng-pattern="/^(\(0-\d\d\) \d\d\d \d\d \d\d)|(\d\d\d \d\d\d \d\d\d)|(\d\d\d\d\d\d\d\d\d)|(0-\d\d\)\d\d\d\d\d\d\d)|(0\d\d\)\d\d\d\d\d\d\d)$/"
                                th:field="*{phoneNumber}"/>
                         <span class="has-error" ng-show="customerInfoForm.phoneNumber.$dirty">
                             <span ng-show="customerInfoForm.phoneNumber.$invalid"

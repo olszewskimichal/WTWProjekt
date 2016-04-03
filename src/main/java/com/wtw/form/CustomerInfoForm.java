@@ -30,7 +30,7 @@ public class CustomerInfoForm {
     @Pattern(regexp = "^(\\d{2}-\\d{3})$")
     private String zipCode;
 
-    @Pattern(regexp = "^((\\(0-\\d\\d\\) \\d\\d\\d \\d\\d \\d\\d)|(\\d\\d\\d \\d\\d\\d \\d\\d\\d))$")
+    @Pattern(regexp = "^((\\(0-\\d\\d\\) \\d\\d\\d \\d\\d \\d\\d)|(\\d\\d\\d \\d\\d\\d \\d\\d\\d)|(\\d\\d\\d\\d\\d\\d\\d\\d\\d)|(0-\\d\\d\\)\\d\\d\\d\\d\\d\\d\\d)|(0\\d\\d\\)\\d\\d\\d\\d\\d\\d\\d))$")
     private String phoneNumber;
 
     public CustomerInfoForm() {

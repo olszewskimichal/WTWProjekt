@@ -8,20 +8,16 @@ import java.math.BigDecimal;
 public class CartItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    @Column(name = "id")
+    @Column(name = "idCartItem")
     private Long id;
-    @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL, optional = true, fetch = FetchType.EAGER, orphanRemoval = true)
     private Product product;
     private int quantity;
     private BigDecimal totalPrice;
 
-    @ManyToOne
-    @JoinColumn(name = "Id_CART")
-    private Cart cart;
 
     public CartItem() {
         this.quantity = 1;
-        this.cart = null;
     }
 
     public CartItem(Product product) {
@@ -32,14 +28,6 @@ public class CartItem implements Serializable {
 
     public void updateTotalPrice() {
         this.totalPrice = this.product.getPrice().multiply(new BigDecimal(this.quantity));
-    }
-
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
     }
 
     public Long getId() {

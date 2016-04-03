@@ -27,6 +27,7 @@ public class CartRepositoryImpl implements CustomCartRepository {
         Cart cart = cartRepository.findCartById(id);
         System.out.println(cart.toString());
         cart.setCartItems(cartItems);
+        System.out.println("CartItems"+cartItems.toString());
         cart.setGrandTotal(grandTotal);
         System.out.println("CO tu sie odpierdala" + cart.toString());
         cart = cartRepository.save(cart);
