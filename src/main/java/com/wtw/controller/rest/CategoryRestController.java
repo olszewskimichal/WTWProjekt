@@ -1,4 +1,4 @@
-package com.wtw.controller;
+package com.wtw.controller.rest;
 
 import com.wtw.domain.Category;
 import com.wtw.service.CategoryService;

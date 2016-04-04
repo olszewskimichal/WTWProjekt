@@ -1,4 +1,4 @@
-package com.wtw.controller;
+package com.wtw.controller.rest;
 
 import com.wtw.domain.Cart;
 import com.wtw.domain.CartItem;

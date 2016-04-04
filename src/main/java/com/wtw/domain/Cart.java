@@ -20,10 +20,6 @@ public class Cart implements Serializable {
     private List<CartItem> cartItems;
     private BigDecimal grandTotal;
 
-    @OneToOne
-    @JoinColumn(name = "id")
-    private CartItem cartItem;
-
     public Cart() {
         cartItems = new ArrayList<>();
         grandTotal = new BigDecimal(0);
@@ -31,7 +27,6 @@ public class Cart implements Serializable {
 
     public void addCartItem(CartItem item) {
         Long productId = item.getProduct().getId();
-        System.out.println("Chcemy dodac produkt o id =" + productId);
         List<CartItem> result = new ArrayList<>();
         boolean dodaj = true;
         if (!cartItems.isEmpty()) {
@@ -40,10 +35,8 @@ public class Cart implements Serializable {
                     cartItem.setQuantity(cartItem.getQuantity() + item.getQuantity());
                     result.add(cartItem);
                     dodaj = false;
-                    System.out.println("Dodajemy istniejacy" + result.toString());
                 } else {
                     result.add(cartItem);
-                    System.out.println("Dodajemy Nieistniejacy" + result.toString());
                 }
             }
         } else {
@@ -54,7 +47,6 @@ public class Cart implements Serializable {
             result.add(item);
         }
         this.cartItems = result;
-        System.out.println("Jak to wyglada teraz" + cartItems);
         updateGrandTotal();
     }
 

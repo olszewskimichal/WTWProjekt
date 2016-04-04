@@ -30,14 +30,10 @@ public class OrderRepositoryImpl implements CustomOrderRepository {
     public Order updateOrder(Cart cart, Long userId, ShippingDetail shippingDetail, Long id) {
         logger.info("Aktualizacja zamowienia");
         Order order=orderRepository.findOrderById(id);
-        logger.info("Zamowienie przed zmiana wyglada = "+order.toString());
         order.setCart(cart);
         order.setUserId(userId);
         order.setShippingDetail(shippingDetail);
-        logger.info("Zmienione zamowienie powinno miec taki koszyk = "+cart.toString()
-                +" takie dane do wysylki = "+shippingDetail.toString()+" i takie id uzytkownika = "+userId);
         order=orderRepository.save(order);
-        logger.info("Tak wyglada po zmianie = "+order.toString());
         return order;
     }
 }
